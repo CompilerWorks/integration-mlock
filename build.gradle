@@ -1,0 +1,33 @@
+apply plugin: "c"
+apply plugin: 'cunit-test-suite'
+
+model {
+	platforms {
+		x86 {
+			architecture "x86"
+		}
+		x64 {
+			architecture "x86_64"
+		}
+	}
+	components {
+		main(NativeExecutableSpec) {
+			baseName "compilerworks-mlock"
+			targetPlatform "x64"
+			binaries.all {
+				if (toolChain in Gcc) {
+					cCompiler.args "-std=c99"
+				}
+			}
+			sources {
+				c {
+					source {
+						include "**/*.c"
+					}
+				}
+			}
+		}
+	}
+	testSuites {
+	}
+}
